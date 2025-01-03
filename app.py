@@ -8,26 +8,26 @@ Original file is located at
 """
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pandas as pd
-import re
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Load the prediction and comparison data
 donor_forecast = pd.read_csv("donor_forecast.csv")
 comparison_data = pd.read_csv("actual_vs_predicted.csv")
 
-# Root route
 @app.route("/", methods=["GET"])
 def home():
     return "Welcome to the Donor Prediction Chatbot API! Use the /chat endpoint to interact with the chatbot."
 
-# Chatbot route
 @app.route("/chat", methods=["POST"])
 def chatbot():
     user_message = request.json.get("message", "").lower()
     response = ""
 
+    import re
     # Extract date from the user message using regex
     date_match = re.search(r"\d{4}-\d{2}-\d{2}", user_message)
     if date_match:
