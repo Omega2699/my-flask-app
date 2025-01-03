@@ -12,6 +12,11 @@ import pandas as pd
 
 app = Flask(__name__)
 
+# Root Route
+@app.route("/", methods=["GET"])
+def home():
+    return "Welcome to the Donor Prediction Chatbot API! Use the /chat endpoint to interact with the chatbot."
+
 # Load the prediction and comparison data
 donor_forecast = pd.read_csv("donor_forecast.csv")
 comparison_data = pd.read_csv("actual_vs_predicted.csv")
